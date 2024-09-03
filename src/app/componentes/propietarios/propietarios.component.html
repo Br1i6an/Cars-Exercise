@@ -1,0 +1,248 @@
+<div class="container-fluid">
+  <nav class="pt-1" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/dash/root']" routerLinkActive="router-link-active">
+          <i class="fa fa-home"></i>
+        </a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <a href="javascript:void();">Propietario</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Administrar</li>
+    </ol>
+  </nav>
+  <div class="row">
+    <div class="col-8">
+      <table class="table table-striped table-hover table-sm manito">
+        <thead class="bg-dark text-white">
+          <tr>
+            <th style="width: 10%">Código</th>
+            <th style="width: 25%">Nombre</th>
+            <th style="width: 15%">Apellidos</th>
+            <th style="width: 15%">Documento</th>
+            <th style="width: 15%">Telefono</th>
+            <th style="width: 10%">&nbsp;</th>
+            <th style="width: 10%">&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let miPropietario of arregloPropietario | slice : 1;
+              let indice = index
+            "
+            (click)="seleccionarPropietario(miPropietario)"
+            [class.table-primary]="miPropietario == propietarioSeleccionado"
+          >
+            <td>{{ indice + 1 }}</td>
+            <td>{{ miPropietario.nombre }}</td>
+            <td>{{ miPropietario.apellidos }}</td>
+            <td>{{ miPropietario.documento }}</td>
+            <td>{{ miPropietario.telefono }}</td>
+            <td class="text-center">
+              <i
+                class="far fa-trash-alt papeleraRoja"
+                (click)="
+                  tieneCarro(miPropietario)
+                    ? ''
+                    : abrirModal(ventanaEliminar, miPropietario)
+                "
+                [ngClass]="
+                  tieneCarro(miPropietario) ? 'papeleraGris' : 'papeleraRoja'
+                "
+              ></i>
+              &nbsp;
+              <i class="fas fa-recycle papeleraAzul"></i>
+            </td>
+            <td>
+              <img
+                [src]="miPropietario.fotobase64"
+                style="width: 25px; width: 25px"
+                onerror="this.src='../assets/imagenes/noPicture.png'"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Formulario-->
+    <div class="col-4 bg-light">
+      <form class="mt-1">
+        <div class="row g-3 mt-1">
+          <div class="col-3">
+            <label for="nombre" class="text-success">Nombre:</label>
+          </div>
+          <div class="col-8">
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              class="form-control form-control-sm"
+              [(ngModel)]="propietarioSeleccionado.nombre"
+            />
+          </div>
+        </div>
+        <div class="row g-3 mt-1">
+          <div class="col-3">
+            <label for="apellido" class="text-success">Apellidos:</label>
+          </div>
+          <div class="col-8">
+            <input
+              type="text"
+              id="apellido"
+              name="apellido"
+              class="form-control form-control-sm"
+              [(ngModel)]="propietarioSeleccionado.apellidos"
+            />
+          </div>
+        </div>
+        <div class="row g-3 mt-1">
+          <div class="col-3">
+            <label for="modelo" class="text-success">Documento:</label>
+          </div>
+          <div class="col-8">
+            <input
+              type="text"
+              id="documento"
+              name="documento"
+              class="form-control form-control-sm"
+              [(ngModel)]="propietarioSeleccionado.documento"
+            />
+          </div>
+        </div>
+        <div class="row g-3 mt-1">
+          <div class="col-3">
+            <label for="telefono" class="text-success">Telefono:</label>
+          </div>
+          <div class="col-8">
+            <input
+              type="text"
+              id="telefono"
+              name="telefono"
+              class="form-control form-control-sm"
+              [(ngModel)]="propietarioSeleccionado.telefono"
+            />
+          </div>
+        </div>
+        <div class="row g-3 mt-1">
+          <div class="col-3">
+            <label for="foto" class="text-success">Foto:</label>
+          </div>
+          <div class="col-8">
+            <div class="input-group">
+              <input
+                type="text"
+                id="foto"
+                name="foto"
+                class="form-control form-control-sm"
+                [(ngModel)]="propietarioSeleccionado.nombreFoto"
+              />
+              <button
+                class="btn btn-primary btn-sm"
+                (click)="cajaOculta.click()"
+              >
+                <span class="input-group">+</span>
+                <input
+                  #cajaOculta
+                  type="file"
+                  style="display: none"
+                  (change)="seleccionarFoto($event)"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="row g-3 mt-1">
+          <div class="col-3"></div>
+          <div class="col-8 text-center">
+            <img
+              class="img-thumbnail"
+              onerror="this.src='../assets/imagenes/noPicture.png'"
+              [src]="propietarioSeleccionado.fotobase64"
+            />
+          </div>
+        </div>
+        <!-- Condiciones para los botones: inicio -->
+        <div
+          *ngIf="
+            propietarioSeleccionado.codigo == 0;
+            then nuevoPropietario;
+            else ModificarPropietario
+          "
+        ></div>
+        <p></p>
+        <ng-template #nuevoPropietario>
+          <div class="row g-3 align-items-center mt-1">
+            <div class="col-3"></div>
+            <div class="col-8">
+              <div class="d-grid gap-1 col-12">
+                <button
+                  class="btn btn-primary btn-sm btn-primary"
+                  (click)="agregarPropietario()"
+                >
+                  Crear registro
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template #ModificarPropietario>
+          <div class="row g-3 align-items-center mt-1">
+            <div class="col-3"></div>
+            <div class="col-8">
+              <div class="d-grid gap-1 col-12">
+                <button
+                  class="btn btn-primary btn-sm btn-success"
+                  (click)="actualizarPropietario()"
+                >
+                  Actualizar
+                </button>
+                <button
+                  class="btn btn-primary btn-sm btn-secondary"
+                  (click)="resetearPropietario()"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <!-- Condiciones para los botones: fin -->
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Modal para borrar: Inicio -->
+<ng-template #ventanaEliminar>
+  <div class="modal-header bg-dark text-white" style="padding: 4px">
+    <h5 class="modal-title">{{ modalTitulo }}</h5>
+    <button
+      type="button"
+      class="btn btn-sm text-white"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      {{ modalCuerpo }}<br />
+      <strong>{{ modalContenido }}</strong>
+    </p>
+  </div>
+  <div class="modal-footer" style="padding: 4px">
+    <button type="button" class="btn btn-danger btn-sm" (click)="btnEliminar()">
+      Eliminar
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-sm"
+      (click)="btnCancelar()"
+    >
+      Cancelar
+    </button>
+  </div>
+</ng-template>
+<!-- Modal para borrar: Fin -->

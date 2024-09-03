@@ -1,0 +1,37 @@
+.miCursor {
+    cursor: pointer;
+    text-decoration: none;
+    }
+    .papeleraRoja {
+    color: #9e2702;
+    }
+    .papeleraGris {
+    color: #a09898;
+    }
+    .manito tr {
+    cursor: pointer;
+    }
+    .chequeo {
+    font-size: 18px;
+    color: #9e2702;
+    }
+    .negrita {
+    font-weight: bold;
+    }
+    /* Para breadcrumb con 
+    angular */
+    ol li a[ng-reflect-routerlink] {
+    color: #9e2702;
+    text-decoration: none;
+    }
+    /* Para breadcrumb sin 
+    angular */
+    ol li a {
+    color: #9e2702;
+    text-decoration: none;
+    }
+
+    .tamaño{
+        width: 50px;
+        height: auto;   
+    }

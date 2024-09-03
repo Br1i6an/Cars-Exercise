@@ -1,0 +1,67 @@
+<div class="container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" [routerLink]="['/home']"
+      >&nbsp;
+      <img src="../assets/imagenes/angularLogo.png" alt="" class="tamaño" />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bstarget="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      arialabel="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item ml-5">
+          <a
+            class="nav-link"
+            [routerLink]="['/dash/root']"
+            routerLinkActive="active"
+            >Inicio</a
+          >
+        </li>
+        <li class="nav-item ml-5">
+          <a
+            class="nav-link"
+            [routerLink]="['/dash/car']"
+            routerLinkActive="active"
+            >Carros</a
+          >
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Propietario
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item" [routerLink]="['/dash/owner']"
+                >Administrar
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a class="dropdown-item" [routerLink]="['/dash/ownerCar']"
+                >Detalle carros</a
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <a class="navbar-brand" [routerLink]="['/home']">{{ titulo }}</a>
+    </div>
+  </nav>
+</div>
